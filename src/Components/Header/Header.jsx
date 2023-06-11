@@ -1,6 +1,4 @@
 import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography, Avatar, Tooltip, Button } from '@mui/material'
-import { AdbRounded } from '@mui/icons-material'; 
-import {spacing} from '@mui/system';
 import MenuIcon from '@mui/icons-material/Menu';
 import React from 'react'
 
@@ -9,18 +7,10 @@ function Header() {
   let currUser = null;
   const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -112,7 +102,6 @@ function Header() {
           </Toolbar>
         </Container>
       </AppBar>
-
     </>
   )
 }

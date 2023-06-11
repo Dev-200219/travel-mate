@@ -8,7 +8,8 @@ import './Footer.css';
 
 function Footer() {
   return (
-    <BottomNavigation sx ={{display : 'flex', justifyContent:'space-between', pl:'10px', pr:'10px', backgroundColor : '#1976d2', alignItems:'center'}}>
+    <BottomNavigation className='footer' 
+    sx ={{display : 'flex', justifyContent:'space-between', pl:'10px', pr:'10px', backgroundColor : '#1976d2', alignItems:'center'}}>
       <div className="left-part">
           <Typography sx={{color:'white'}}>
             &copy; 2023 TripMate. All Rights Reserved
