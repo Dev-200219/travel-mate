@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState} from 'react'
 import './style.css'
 import { Paper, Typography, useMediaQuery } from '@mui/material';
 import GoogleMapReact from 'google-map-react';
@@ -8,7 +8,17 @@ import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 
 function Map() {
   const isMobile = useMediaQuery('(min-width:600px)');
-  const coordinates = { lat: 18.52043, lng: 73.856743};
+  const [coordinates, setCoordinates] = useState({});
+  const [bounds, setBounds] = useState({});
+
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition(({coords}) => {
+      setCoordinates({lat : coords.latitude, lng : coords.longitude})
+    })
+  }, [])
+  
+  console.log(bounds);
+
   return ( 
       <div className="mapContainer">
         <GoogleMapReact
@@ -18,7 +28,9 @@ function Map() {
           defaultZoom={10}
           margin={[50,50,50,50]}
           options={''}
-          onChange={''}
+          onChange={(e) => {
+            setBounds({ne:e.bounds.ne, sw:e.bounds.sw})
+          }}
           onChildClick={''}
         >
         </GoogleMapReact>

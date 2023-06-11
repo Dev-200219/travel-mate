@@ -10,7 +10,7 @@ function App() {
     <>
       <CssBaseline/>
       <Header/>
-      <Grid container spacing={3} style={{width:'100%', marginLeft:'0px', alignItems: 'center', height: '88%'}}>
+      <Grid container spacing={3} style={{width:'100%', marginLeft:'0px', alignItems: 'center', height: '86%'}}>
         <Grid item xs = {12} md={4} style={{marginBottom: '20px'}}>
           <List/>
         </Grid>

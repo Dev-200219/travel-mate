@@ -1,14 +1,26 @@
 import { SearchOutlined } from '@mui/icons-material'
-import { Button, Card, CardActions, CardContent, Grid, IconButton, Input, InputBase, Paper, Typography } from '@mui/material'
-import React from 'react'
+import { Button, Card, CardActions, CardContent, CircularProgress, FormControl, Grid, IconButton, Input, InputBase, InputLabel, MenuItem, Paper, Select, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import './style.css'
 import { Autocomplete } from '@react-google-maps/api'
 import DeleteIcon from '@mui/icons-material/Delete';
+import LocationCard from '../LocationCard/LocationCard'
+import axios from 'axios'
+import { getRestaurants } from '../API/api'
+import PlaceCard from '../PlaceCard/PlaceCard'
 
 function List() {
-  const locations = ['Agra', 'New Delhi', 'Jaipur', 'Udaipur','Agra', 'New Delhi', 'Jaipur', 'Udaipur','Agra', 'New Delhi', 'Jaipur', 'Udaipur','Agra', 'New Delhi','Agra', 'New Delhi', 'Jaipur', 'Udaipur','Agra', 'New Delhi', 'Jaipur', 'Udaipur','Agra', 'New Delhi', 'Jaipur', 'Udaipur','Agra', 'New Delhi','Agra', 'New Delhi', 'Jaipur', 'Udaipur','Agra', 'New Delhi', 'Jaipur', 'Udaipur','Agra', 'New Delhi', 'Jaipur', 'Udaipur','Agra', 'New Delhi']
+  const locations = []
+  const [places, setPlaces] = useState([]);
+  const [rating, setRating] = useState(0); 
+
+  useEffect(async() => {
+    let data = await getRestaurants();
+    setPlaces([...data]);
+  }, [])
 
   return (
+    locations.length > 0 ?
     <div className='list-container'>
       <Paper>
         {/* <Autocomplete> */}
@@ -22,24 +34,41 @@ function List() {
         {
             locations.map((location, idx) => {
               return (
-                <Card className='single-location-card' key={idx}>
-                    <CardContent>
-                        <Typography variant='h6'>{location}</Typography>
-                    </CardContent>
-                    <CardActions className='card-actions'>
-                      <Button variant='text' color='secondary'>Hotels</Button>
-                      <Button variant='text' color='secondary'>Restaurants</Button>
-                      <Button variant='text' color='secondary'>Attractions</Button>
-                      <Button variant="text" color='warning' startIcon={<DeleteIcon />}>
-                        Delete
-                      </Button>
-                    </CardActions>
-                </Card>
+                <LocationCard idx = {idx} location = {location}/>
               )
             })
         }
       </Grid>
-    </div>
+    </div> :
+      <>
+        <FormControl fullWidth sx= {{marginTop:'10px'}}>
+          <InputLabel id="demo-simple-select-label">Rating</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={rating}
+            label="Rating"
+            onChange={(e)=>{
+              setRating(e.target.value);
+            }}
+          >
+            <MenuItem value={0}>All</MenuItem>
+            <MenuItem value={2}>Above 2.0</MenuItem>
+            <MenuItem value={3}>Above 3.0</MenuItem>
+            <MenuItem value={4}>Above 4.0</MenuItem>
+          </Select>
+        </FormControl>
+        <Grid container style={{height:'70vh', overflow:'auto', marginTop:'18px'}}>
+        {
+            places.length > 0 ? places.map((place, idx) => {
+              return (
+                place.rating > rating ? 
+                <PlaceCard idx = {idx} place = {place}/> : <></>
+              )
+            }) : <CircularProgress/>
+        }
+      </Grid>
+      </>
   )
 }
 
