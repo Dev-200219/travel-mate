@@ -5,19 +5,17 @@ import GoogleMapReact from 'google-map-react';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Rating from '@mui/material';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import { SET_BOUNDS, SET_CENTER } from '../Redux/actionTypes';
+import { connect } from 'react-redux';
 
-function Map() {
+function Map({coordinates, bounds, setCenter, setBounds}) {
   const isMobile = useMediaQuery('(min-width:600px)');
-  const [coordinates, setCoordinates] = useState({});
-  const [bounds, setBounds] = useState({});
 
   useEffect(()=>{
     navigator.geolocation.getCurrentPosition(({coords}) => {
-      setCoordinates({lat : coords.latitude, lng : coords.longitude})
+      setCenter(coords.latitude, coords.longitude)
     })
   }, [])
-  
-  console.log(bounds);
 
   return ( 
       <div className="mapContainer">
@@ -29,7 +27,8 @@ function Map() {
           margin={[50,50,50,50]}
           options={''}
           onChange={(e) => {
-            setBounds({ne:e.bounds.ne, sw:e.bounds.sw})
+            setCenter(e.center.lat, e.center.lng)
+            setBounds(e)
           }}
           onChildClick={''}
         >
@@ -38,4 +37,18 @@ function Map() {
   )
 }
 
-export default Map
+const mapStateToProps = (state) => {
+  return {
+    coordinates : state.map.center,
+    bounds : state.map.bounds
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setBounds : (e) => dispatch({type : SET_BOUNDS, payload : {ne: e.bounds.ne, sw : e.bounds.sw}}),
+    setCenter : (lat, lng) => dispatch({type : SET_CENTER, payload : {lat, lng}})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

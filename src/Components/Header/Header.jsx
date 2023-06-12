@@ -1,26 +1,23 @@
-import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography, Avatar, Tooltip, Button } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu';
-import React from 'react'
+import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography, Avatar, Tooltip, Button, Paper, InputBase } from '@mui/material'
+import React, { useState } from 'react'
+import { Autocomplete } from '@react-google-maps/api';
+import { SearchOutlined } from '@mui/icons-material';
+import { SET_CENTER } from '../Redux/actionTypes';
+import { connect } from 'react-redux';
 
-function Header() {
-
-  let currUser = null;
-  const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };  
-
+function Header({setCenter}) {
+  const [autocomplete, setAutocomplete] = useState(null);
+  let onLoad = (autoC) => setAutocomplete(autoC);
+  
+  let onPlaceChanged = () => {
+    const lat = autocomplete.getPlace().geometry.location.lat();
+    const lng = autocomplete.getPlace().geometry.location.lng();
+    setCenter(lat, lng)
+  }
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar>
         <Container maxWidth="xl" sx={{
           paddingLeft:'10px !important'}}>
           <Toolbar disableGutters sx={{
@@ -40,7 +37,7 @@ function Header() {
                 textDecoration: 'none',
               }}
             >
-              TripMate
+              TravelMate
             </Typography>
 
             <Typography
@@ -58,47 +55,17 @@ function Header() {
                 textDecoration: 'none',
               }}
             >
-              TripMate
+              TravelMate
             </Typography>
-
-            {
-              currUser ? 
-                <Box>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box> :
-              <>
-                <Box>
-                  <Button sx={{color:'white'}}>Login</Button>
-                  <Button sx={{color:'white'}}>Sign Up</Button>
-                </Box>
-              </>
-            }
+            
+            <Paper>
+            <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+              <div className="search-bar" style={{backgroundColor:'whitesmoke'}}>
+                <SearchOutlined/>
+                <InputBase style={{width:'100%', padding:'2px'}}/>
+              </div>
+            </Autocomplete>
+          </Paper>
           </Toolbar>
         </Container>
       </AppBar>
@@ -106,4 +73,10 @@ function Header() {
   )
 }
 
-export default Header
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCenter : (lat, lng) => {dispatch({type : SET_CENTER, payload : {lat, lng}})}
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Header);

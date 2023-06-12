@@ -5,7 +5,6 @@ import { Phone } from '@mui/icons-material'
 import Rating from '@mui/material'
 
 function PlaceCard({place}) {
-  console.log(place.rating);
   return (
     place.name ?
     <Card elevation={6} style={{width:'100%', marginBottom:'10px'}}>
