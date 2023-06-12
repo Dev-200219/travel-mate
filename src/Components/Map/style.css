@@ -1,3 +1,14 @@
 .mapContainer {
     height: 83.4vh;
 }
+
+.marker-container {
+    cursor: pointer;
+    position: 'absolute';
+    transform: 'translate(-50%, -50%)';
+    z-index: 1;
+}
+
+.marker-container:hover{
+    z-index: 2;
+}

@@ -1,6 +1,6 @@
 import { SearchOutlined } from '@mui/icons-material'
 import { Button, Card, CardActions, CardContent, CircularProgress, FormControl, Grid, IconButton, Input, InputBase, InputLabel, MenuItem, Paper, Select, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { createRef, useEffect, useState, useRef } from 'react'
 import './style.css'
 import { getRestaurants } from '../API/api'
 import PlaceCard from '../PlaceCard/PlaceCard'
@@ -8,15 +8,18 @@ import { CHANGE_TYPE, SET_PLACES } from '../Redux/actionTypes'
 import { connect } from 'react-redux'
 import fetchDataThunk from '../Redux/placesActions'
 
-function List({places, setPlaces, bounds, loading, err, type, setType}) {
+function List({places, setPlaces, bounds, loading, err, type, setType, childClicked}) {
   const [rating, setRating] = useState(0);
+  const[cardRefs, setCardRefs] = useState([]);
 
   useEffect(() => {
     setPlaces();
   }, [bounds, type])
 
   useEffect(() => {
-    
+    let newRefs = Array(places?.length).fill().map((_, idx) => createRef());
+    console.log(newRefs);
+    setCardRefs(newRefs)
   }, [places])
 
   return (
@@ -61,7 +64,9 @@ function List({places, setPlaces, bounds, loading, err, type, setType}) {
           loading ? <CircularProgress/> : err ? <Typography>{err}</Typography> :
           places.length > 0 ? places.map((place, idx) => {
             return (
-              <PlaceCard place={place} key={idx}/>
+              <Grid ref={(el) => cardRefs[idx] ? cardRefs[idx].current = el : null} item xs={12}>
+                <PlaceCard place={place} key={idx} selected={Number(childClicked) === idx} cardRef = {cardRefs[idx]} idx={idx}/>
+              </Grid>
             )
           }) : <Typography>No Places in this region</Typography>
         }
@@ -76,7 +81,8 @@ const mapStateToProps = (state) => {
     bounds: state.map.bounds,
     loading : state.places.loading,
     err : state.places.err,
-    type : state.places.type
+    type : state.places.type,
+    childClicked : state.map.childClicked
   }
 }
 

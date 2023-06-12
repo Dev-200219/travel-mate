@@ -1,8 +1,9 @@
-import { SET_BOUNDS, SET_CENTER, SET_PLACES } from "./actionTypes";
+import { SET_BOUNDS, SET_CENTER, SET_CHILD_CLICKED, SET_PLACES } from "./actionTypes";
 
 const initialState = {
     center : {},
     bounds : {ne : {lat : 0, lng : 0}, sw :{lat : 0, lng : 0}},
+    childClicked : null
 }
 
 const mapReducer = (state = initialState, action) =>{
@@ -16,6 +17,11 @@ const mapReducer = (state = initialState, action) =>{
             return {
                 ...state,
                 bounds : {...action.payload}
+            }
+        case SET_CHILD_CLICKED : 
+            return {
+                ...state,
+                childClicked : Number(action.payload)
             }
 
         default : return state;

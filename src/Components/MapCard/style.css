@@ -1,0 +1,18 @@
+.map-card {
+    width: 100px;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+
+.map-card:hover{
+    z-index: 2;
+}
+
+.map-card > img {
+    width: 100%;
+}
