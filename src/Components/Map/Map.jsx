@@ -1,15 +1,14 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect } from 'react'
 import './style.css'
-import { Paper, Typography, useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import GoogleMapReact from 'google-map-react';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Rating from '@mui/material';
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { SET_BOUNDS, SET_CENTER, SET_CHILD_CLICKED } from '../Redux/actionTypes';
 import { connect } from 'react-redux';
 import MapCard from '../MapCard/MapCard';
+import mapInternalStyles from './mapInternalStyles';
 
-function Map({coordinates, bounds, setCenter, setBounds, places, setChildClicked, rating}) {
+function Map({coordinates, bounds, setCenter, setBounds, places, setChildClicked, rating, center}) {
   const isDesktop = useMediaQuery('(min-width:600px)');
 
   useEffect(()=>{
@@ -26,12 +25,13 @@ function Map({coordinates, bounds, setCenter, setBounds, places, setChildClicked
           defaultCenter={{lat : 0.8578, lng : 36.3174}}
           defaultZoom={10}
           margin={[50,50,50,50]}
-          options={''}
+          options={{ disableDefaultUI: true, zoomControl: true, styles: mapInternalStyles }}
           onChange={(e) => {
-            setCenter(e.center.lat, e.center.lng)
+            setCenter(Number(e.center.lat), Number(e.center.lng))
             setBounds(e)
           }}
           onChildClick={(child) => {
+            console.log(child);
             setChildClicked(child);
           }}
         >
@@ -47,7 +47,6 @@ function Map({coordinates, bounds, setCenter, setBounds, places, setChildClicked
               )
             })
           }
-
         </GoogleMapReact>
       </div>
   )
@@ -58,7 +57,8 @@ const mapStateToProps = (state) => {
     coordinates : state.map.center,
     bounds : state.map.bounds,
     places : state.places.places,
-    rating : state.places.rating
+    rating : state.places.rating,
+    center : state.map.center
   }
 }
 

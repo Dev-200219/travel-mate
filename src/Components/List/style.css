@@ -27,6 +27,13 @@
     align-items: center;
 }
 
+.err-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media screen and (max-width:600px) {
     .list-container {
         margin-right: 20px;

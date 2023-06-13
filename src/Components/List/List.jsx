@@ -1,10 +1,8 @@
-import { SearchOutlined } from '@mui/icons-material'
-import { Button, Card, CardActions, CardContent, CircularProgress, FormControl, Grid, IconButton, Input, InputBase, InputLabel, MenuItem, Paper, Select, Typography } from '@mui/material'
-import React, { createRef, useEffect, useState, useRef } from 'react'
+import { CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from '@mui/material'
+import React, { createRef, useEffect, useState } from 'react'
 import './style.css'
-import { getData } from '../API/api'
 import PlaceCard from '../PlaceCard/PlaceCard'
-import { CHANGE_TYPE, SET_PLACES, SET_RATING } from '../Redux/actionTypes'
+import { CHANGE_TYPE, SET_RATING } from '../Redux/actionTypes'
 import { connect } from 'react-redux'
 import fetchDataThunk from '../Redux/placesActions'
 
@@ -62,7 +60,7 @@ function List({places, setPlaces, bounds, loading, err, type, setType, childClic
 
       <Grid container style={{ height: '75vh', overflow: 'auto', marginTop: '18px' }}>
         {
-          loading ? <CircularProgress/> : err ? <Typography>{err}</Typography> :
+          loading ? <div className='err-container'><CircularProgress/></div> : err ? <div className='err-container'><Typography>{err}</Typography></div>:
           places.length > 0 ? places.map((place, idx) => {
             return (
               <Grid ref={(el) => cardRefs[idx] ? cardRefs[idx].current = el : null} item xs={12}>
