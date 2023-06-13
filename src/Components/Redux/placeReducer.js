@@ -1,10 +1,11 @@
-import { CHANGE_TYPE, FETCH_DATA, FETCH_DATA_ERR, FETCH_DATA_SUCC } from "./actionTypes";
+import { CHANGE_TYPE, FETCH_DATA, FETCH_DATA_ERR, FETCH_DATA_SUCC, SET_RATING } from "./actionTypes";
 
 const initialState = {
     places : [],
     loading : false,
     err : null,
-    type : 'restaurants'
+    type : 'restaurants',
+    rating : 0
 }
 
 const placeReducer = (state = initialState, action) => {
@@ -33,6 +34,11 @@ const placeReducer = (state = initialState, action) => {
             return {
                 ...state,
                 type : action.payload
+            }
+        case SET_RATING :
+            return {
+                ...state,
+                rating : action.payload
             }
 
         default : return state;

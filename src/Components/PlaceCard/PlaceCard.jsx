@@ -4,13 +4,9 @@ import { LocationOnOutlined } from '@mui/icons-material'
 import { Phone } from '@mui/icons-material'
 import { Rating } from '@mui/material'
 
-function PlaceCard({ place, selected, cardRef, idx}) {
+function PlaceCard({ place, selected, cardRef}) {
 
   if(selected) {
-    console.log(idx);
-    if(cardRef)
-    console.log(cardRef.current);
-    
     cardRef?.current?.scrollIntoView({behavior : 'smooth', block : 'start'});
   }
 

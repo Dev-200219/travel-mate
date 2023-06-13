@@ -1,0 +1,9 @@
+@media screen and (max-width : 600px){
+    .search-container {
+        width : 9rem;
+    }
+
+    .mapContainer {
+        margin-right: 20px;
+    }
+}

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getRestaurants = async(type, bounds) => {
+export const getData = async(type, bounds) => {
     try {
         const data = await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary`, {
           params: {

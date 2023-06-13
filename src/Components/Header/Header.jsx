@@ -1,9 +1,10 @@
-import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography, Avatar, Tooltip, Button, Paper, InputBase } from '@mui/material'
+import { AppBar, Container, Toolbar, Typography, Paper, InputBase } from '@mui/material'
 import React, { useState } from 'react'
 import { Autocomplete } from '@react-google-maps/api';
 import { SearchOutlined } from '@mui/icons-material';
 import { SET_CENTER } from '../Redux/actionTypes';
 import { connect } from 'react-redux';
+import './style.css'
 
 function Header({setCenter}) {
   const [autocomplete, setAutocomplete] = useState(null);
@@ -18,11 +19,11 @@ function Header({setCenter}) {
   return (
     <>
       <AppBar>
-        <Container maxWidth="xl" sx={{
+        <Container maxWidth="5000px" sx={{
           paddingLeft:'10px !important'}}>
           <Toolbar disableGutters sx={{
             display : 'flex',
-            justifyContent : 'space-between'
+            justifyContent : 'space-between',
           }}>
             <Typography
               variant="h6"
@@ -31,8 +32,9 @@ function Header({setCenter}) {
               href="/"
               sx={{
                 display: { xs: 'none', md: 'flex' },
-                fontWeight: 700,
+                fontWeight: 1000,
                 letterSpacing: '.1rem',
+                fontSize : 'xxx-large',
                 color: 'inherit',
                 textDecoration: 'none',
               }}
@@ -49,7 +51,8 @@ function Header({setCenter}) {
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                fontWeight: 700,
+                fontWeight: 1000,
+                fontSize:'x-large',
                 letterSpacing: '.1rem',
                 color: 'inherit',
                 textDecoration: 'none',
@@ -58,7 +61,7 @@ function Header({setCenter}) {
               TravelMate
             </Typography>
             
-            <Paper>
+            <Paper className='search-container'>
             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
               <div className="search-bar" style={{backgroundColor:'whitesmoke'}}>
                 <SearchOutlined/>
@@ -66,6 +69,7 @@ function Header({setCenter}) {
               </div>
             </Autocomplete>
           </Paper>
+
           </Toolbar>
         </Container>
       </AppBar>

@@ -1,4 +1,4 @@
-import { getRestaurants } from "../API/api"
+import { getData } from "../API/api"
 import { FETCH_DATA, FETCH_DATA_ERR, FETCH_DATA_SUCC } from "./actionTypes"
 
 const fetchData = () => {
@@ -29,7 +29,7 @@ const fetchDataThunk = () => {
 
         dispatch(fetchData());
         try {
-            let data = await getRestaurants(type, bounds);
+            let data = await getData(type, bounds);
             dispatch(fetchDataSucc(data));
         }
         catch(err) {

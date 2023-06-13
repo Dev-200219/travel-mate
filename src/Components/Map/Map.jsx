@@ -9,7 +9,7 @@ import { SET_BOUNDS, SET_CENTER, SET_CHILD_CLICKED } from '../Redux/actionTypes'
 import { connect } from 'react-redux';
 import MapCard from '../MapCard/MapCard';
 
-function Map({coordinates, bounds, setCenter, setBounds, places, setChildClicked}) {
+function Map({coordinates, bounds, setCenter, setBounds, places, setChildClicked, rating}) {
   const isDesktop = useMediaQuery('(min-width:600px)');
 
   useEffect(()=>{
@@ -40,8 +40,8 @@ function Map({coordinates, bounds, setCenter, setBounds, places, setChildClicked
               return(
                 <div key={idx} className="marker-container" lat = {Number(place.latitude)} lng = {Number(place.longitude)}>
                   {
-                    !isDesktop ? <LocationOnIcon/> : 
-                    <MapCard place = {place}/>
+                    Number(place.rating) >= Number(rating) ? !isDesktop ? <LocationOnIcon/> : 
+                    <MapCard place = {place}/> : <></>
                   }
                 </div>
               )
@@ -57,7 +57,8 @@ const mapStateToProps = (state) => {
   return {
     coordinates : state.map.center,
     bounds : state.map.bounds,
-    places : state.places.places
+    places : state.places.places,
+    rating : state.places.rating
   }
 }
 
