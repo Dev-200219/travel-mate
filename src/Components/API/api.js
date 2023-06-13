@@ -11,7 +11,7 @@ export const getData = async(type, bounds) => {
             currency : 'INR'
           },
           headers: {
-            'X-RapidAPI-Key': '',
+            'X-RapidAPI-Key': process.env.REACT_APP_TRAVELADVISOR_API_KEY,
             'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
           }
         })
@@ -21,4 +21,4 @@ export const getData = async(type, bounds) => {
       catch(err) {
         throw(err.message)
       }
-}
+  }
