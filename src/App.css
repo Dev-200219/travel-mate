@@ -15,3 +15,10 @@ body {
 .pac-container {
     z-index: 1200;
 }
+
+.scroll-to-top {
+    position: fixed !important;
+    bottom: 0% !important;
+    left: 50% !important;
+    right: 50% !important;
+}

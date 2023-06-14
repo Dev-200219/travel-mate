@@ -4,6 +4,7 @@ import Map from './Components/Map/Map'
 import './App.css'
 import Footer from './Components/Footer/Footer';
 import { CssBaseline, Grid } from '@mui/material';
+import ScrollToTop from './Components/ScrollToTop/ScrollToTop';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         </Grid>
       </Grid>
       <Footer/>
+      <ScrollToTop/>
     </>
   );
 }
