@@ -1,4 +1,4 @@
-import { SET_BOUNDS, SET_CENTER, SET_CHILD_CLICKED, SET_PLACES } from "./actionTypes";
+import { SET_BOUNDS, SET_CENTER, SET_CHILD_CLICKED } from "./actionTypes";
 
 const initialState = {
     center : {},
